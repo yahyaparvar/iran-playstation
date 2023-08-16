@@ -3,6 +3,7 @@ import { sampleProducts } from "./data";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { productRouter } from "./routers/product_router";
+import { seedRouter } from "./routers/seed_roouter";
 dotenv.config();
 
 const MONGODB_URL =
@@ -19,8 +20,9 @@ mongoose
   });
 
 const app = express();
-app.use("products", productRouter);
-const PORT = 4000;
+app.use("/products", productRouter);
+app.use("/seed", seedRouter);
+const PORT = 8000;
 app.listen(PORT, () => {
   console.log(`server started at http://localhost:${PORT}`);
 });
