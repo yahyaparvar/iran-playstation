@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { productRouter } from "./routers/product_router";
 import { seedRouter } from "./routers/seed_roouter";
+import { userRouter } from "./routers/user_router";
 dotenv.config();
 
 const MONGODB_URL =
@@ -20,7 +21,10 @@ mongoose
   });
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/products", productRouter);
+app.use("/users", userRouter);
 app.use("/seed", seedRouter);
 const PORT = 8000;
 app.listen(PORT, () => {
