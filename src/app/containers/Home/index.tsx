@@ -31,6 +31,12 @@ export function Home(props: Props) {
         <meta name="description" content="Description of Home" />
       </Helmet>
       <div>Home</div>
+      <div>هوم</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
+      <div>Home</div>
     </>
   );
 }

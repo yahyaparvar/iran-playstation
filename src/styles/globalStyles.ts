@@ -1,5 +1,10 @@
 import { createGlobalStyle, css } from "styled-components";
-
+//@ts-ignore
+import irSansTTP from "../assets/fonts/iran-sans/Sansa4fran3.ttf";
+//@ts-ignore
+import irSansEOT from "../assets/fonts/iran-sans/Sansa4fran3.eot";
+//@ts-ignore
+import irSansWOFF from "../assets/fonts/iran-sans/Sansa4fran3.woff";
 const GlobalStyle = createGlobalStyle`
 
 :root {
@@ -24,7 +29,12 @@ const GlobalStyle = createGlobalStyle`
 .darkTheme {
 
 }
-
+@font-face {
+  font-family: 'ir-sans';
+  src: url(${irSansTTP}) format('truetype');
+  src: url(${irSansEOT});
+  src: url(${irSansWOFF}) format("woff");
+}
 body,
 html {
   margin: 0;
@@ -33,6 +43,9 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+}
+*{
+  font-family:"ir-sans" !important;
 }
 `;
 
