@@ -46,6 +46,7 @@ html {
 }
 *{
   font-family:"ir-sans" !important;
+  box-sizing:border-box ;
 }
 `;
 
