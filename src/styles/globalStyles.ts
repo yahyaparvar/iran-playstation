@@ -43,9 +43,11 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  background-color:#006FCD ;
 }
 *{
   font-family:"ir-sans" !important;
+  color: white;
   box-sizing:border-box ;
 }
 `;

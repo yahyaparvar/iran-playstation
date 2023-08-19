@@ -1,26 +1,35 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { PayloadAction } from '@reduxjs/toolkit';
-import { ContainerState } from './types';
+import { PayloadAction } from "@reduxjs/toolkit";
+import { ContainerState } from "./types";
 import { createSlice } from "store/toolkit";
 import { useInjectReducer, useInjectSaga } from "store/redux-injectors";
 
-import { homeSaga } from './saga';
+import { homeSaga } from "./saga";
 
 // The initial state of the Home container
-export const initialState: ContainerState = {};
+export const initialState: ContainerState = {
+  products: [],
+};
 
 const homeSlice = createSlice({
-  name: 'home',
+  name: "home",
   initialState,
   reducers: {
-    someAction(state, action: PayloadAction<any>) {},
+    setProducts(state, action: PayloadAction<any>) {
+      state.products = action.payload;
+    },
+    getProducts(state) {},
   },
 });
 
-export const { actions:homeActions, reducer:homeReducer, name: sliceKey } = homeSlice;
+export const {
+  actions: homeActions,
+  reducer: homeReducer,
+  name: sliceKey,
+} = homeSlice;
 
-export const usehomeSlice=()=>{
-useInjectReducer({ key: sliceKey, reducer: homeReducer });
-useInjectSaga({ key: sliceKey, saga: homeSaga });
-return { homeActions }
-}
+export const usehomeSlice = () => {
+  useInjectReducer({ key: sliceKey, reducer: homeReducer });
+  useInjectSaga({ key: sliceKey, saga: homeSaga });
+  return { homeActions };
+};

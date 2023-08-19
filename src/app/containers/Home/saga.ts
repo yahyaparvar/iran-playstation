@@ -1,8 +1,15 @@
-// import { take, call, put, select, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from "redux-saga/effects";
 // import { actions } from './slice';
 
-// export function* doSomething() {}
+import { homeActions } from "./slice";
+import { axiosNoAuth } from "services/API";
+import { AxiosResponse } from "axios";
+
+export function* getProducts() {
+  const { data }: AxiosResponse = yield call(axiosNoAuth.get, "/products");
+  yield put(homeActions.setProducts(data));
+}
 
 export function* homeSaga() {
-  // yield takeLatest(actions.someAction.type, doSomething);
+  yield takeLatest(homeActions.getProducts.type, getProducts);
 }

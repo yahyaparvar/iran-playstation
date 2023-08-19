@@ -1,11 +1,14 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from "@reduxjs/toolkit";
 
-import { RootState } from 'store/types';
-import { initialState } from './slice';
+import { RootState } from "store/types";
+import { initialState } from "./slice";
 
-const selectDomain = (state: RootState) => state.home || initialState;
+export const homeDomains = {
+  root: (state: RootState) => state?.home || initialState,
+  products: (state: RootState) => state?.home?.products,
+};
 
-export const selectHome = createSelector(
-  [selectDomain],
-  homeState => homeState,
-);
+export const homeSelectors = {
+  root: createSelector(homeDomains.root, (root) => root),
+  products: createSelector(homeDomains.products, (products) => products),
+};

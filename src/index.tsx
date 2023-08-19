@@ -34,7 +34,7 @@ const ConnectedApp = ({ Component }: Props) => {
         ) : (
           <div
             style={{
-              backgroundColor: "#18181f",
+              backgroundColor: "#006FCD",
               width: " 100vw",
               height: "100vh",
               display: "flex",

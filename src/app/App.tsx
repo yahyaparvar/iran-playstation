@@ -7,6 +7,7 @@ import { NotFoundPage } from "./containers/NotFound";
 import { Home } from "./containers/Home";
 import { Header } from "./components/common/header";
 import styled from "styled-components";
+import { ProductDetail } from "./containers/ProductDetail/Loadable";
 interface CustomRouterProps {
   history: History;
   children?: ReactElement;
@@ -37,6 +38,7 @@ function App() {
       <CustomRouter history={history}>
         <Routes>
           <Route path={AppPages.RootPage} element={<Home />} />
+          <Route path={AppPages.RootPage} element={<ProductDetail />} />
           <Route path={AppPages.NotFoundPage} element={<NotFoundPage />} />
         </Routes>
       </CustomRouter>

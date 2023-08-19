@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import { productRouter } from "./routers/product_router";
 import { seedRouter } from "./routers/seed_roouter";
 import { userRouter } from "./routers/user_router";
+import cors from "cors";
 dotenv.config();
 
 const MONGODB_URL =
@@ -22,6 +23,15 @@ mongoose
 
 const app = express();
 app.use(express.json());
+const corsOpts = {
+  origin: "*",
+
+  methods: ["GET", "POST"],
+
+  allowedHeaders: ["Content-Type"],
+};
+
+app.use(cors(corsOpts));
 app.use(express.urlencoded({ extended: true }));
 app.use("/products", productRouter);
 app.use("/users", userRouter);

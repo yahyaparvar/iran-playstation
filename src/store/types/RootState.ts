@@ -1,3 +1,4 @@
+import { ProductDetailState } from "app/containers/ProductDetail/types";
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 import { HomeState } from "app/containers/Home/types";
@@ -11,4 +12,5 @@ import { HomeState } from "app/containers/Home/types";
 export interface RootState {
   global?: any;
   home?: HomeState;
+  productDetail: ProductDetailState;
 }
