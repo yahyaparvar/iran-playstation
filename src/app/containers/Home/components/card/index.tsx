@@ -10,10 +10,11 @@ interface Props {
   image: string;
   action: string;
   country: string;
+  onClick: () => void;
 }
 export default function PSNCard(props: Props) {
   return (
-    <Card sx={{ maxWidth: 345, marginLeft: 8 }}>
+    <Card onClick={props.onClick} sx={{ maxWidth: 345, marginLeft: 8 }}>
       <CardActionArea>
         <img src={`https://flagsapi.com/${props.country}/flat/64.png`}></img>
         <CardMedia component="img" image={props.image} alt="green iguana" />

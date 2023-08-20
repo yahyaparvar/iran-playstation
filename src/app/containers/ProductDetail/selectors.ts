@@ -1,11 +1,21 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from "@reduxjs/toolkit";
 
-import { RootState } from 'store/types';
-import { initialState } from './slice';
+import { RootState } from "store/types";
 
-const selectDomain = (state: RootState) => state.productDetail || initialState;
-
-export const selectProductDetail = createSelector(
-  [selectDomain],
-  productDetailState => productDetailState,
-);
+const productDetailDoimains = {
+  root: (state: RootState) => state?.productDetail,
+  productDetail: (state: RootState) => state?.productDetail?.product?.details,
+  isProductDetailLoading: (state: RootState) =>
+    state?.productDetail?.product?.loading,
+};
+export const productDetailSelectors = {
+  root: createSelector(productDetailDoimains.root, (root) => root),
+  productDetail: createSelector(
+    productDetailDoimains.productDetail,
+    (productDetail) => productDetail
+  ),
+  isProductDetailLoading: createSelector(
+    productDetailDoimains.isProductDetailLoading,
+    (isProductDetailLoading) => isProductDetailLoading
+  ),
+};

@@ -11,7 +11,7 @@ productRouter.get(
   })
 );
 productRouter.get(
-  "/slug/:slug",
+  "/:slug",
   asyncHandler(async (req, res) => {
     const product = await ProductModel.findOne({ slug: req.params.slug });
     if (product) {

@@ -14,6 +14,8 @@ import { homeSaga } from "./saga";
 import { homeSelectors } from "./selectors";
 import PSNCard from "./components/card";
 import { Wrapper } from "./styles";
+import history from "router/history";
+import { AppPages } from "app/types";
 
 interface Props {}
 
@@ -37,6 +39,9 @@ export function Home(props: Props) {
       {products &&
         products.map((product) => (
           <PSNCard
+            onClick={() => {
+              history.push(`${AppPages.Product}/${product.slug}`);
+            }}
             country={product.country}
             action="خرید"
             title={product.country}

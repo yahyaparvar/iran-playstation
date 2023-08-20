@@ -1,5 +1,5 @@
 import { History } from "history";
-import { FC, ReactElement, useLayoutEffect, useState } from "react";
+import { FC, ReactElement, useEffect, useLayoutEffect, useState } from "react";
 import { Route, Router, Routes } from "react-router-dom";
 import history from "../router/history";
 import { AppPages } from "./types";
@@ -8,6 +8,8 @@ import { Home } from "./containers/Home";
 import { Header } from "./components/common/header";
 import styled from "styled-components";
 import { ProductDetail } from "./containers/ProductDetail/Loadable";
+import { globalActions } from "store/slice";
+import { useDispatch } from "react-redux";
 interface CustomRouterProps {
   history: History;
   children?: ReactElement;
@@ -30,15 +32,19 @@ const CustomRouter: FC<CustomRouterProps> = ({ history, ...props }) => {
     />
   );
 };
-
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(globalActions.getCart());
+    console.log("Header");
+  }, []);
   return (
     <AppWrapper>
       <Header />
       <CustomRouter history={history}>
         <Routes>
           <Route path={AppPages.RootPage} element={<Home />} />
-          <Route path={AppPages.RootPage} element={<ProductDetail />} />
+          <Route path={AppPages.ProductDetail} element={<ProductDetail />} />
           <Route path={AppPages.NotFoundPage} element={<NotFoundPage />} />
         </Routes>
       </CustomRouter>
