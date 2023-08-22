@@ -1,4 +1,5 @@
 import { ProductDetailState } from "app/containers/ProductDetail/types";
+import { CheckoutState } from 'app/containers/Checkout/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 import { HomeState } from "app/containers/Home/types";

@@ -14,9 +14,16 @@ interface Props {
 }
 export default function PSNCard(props: Props) {
   return (
-    <Card onClick={props.onClick} sx={{ maxWidth: 345, marginLeft: 8 }}>
+    <Card
+      onClick={props.onClick}
+      sx={{ maxWidth: 345, marginLeft: 8, position: "relative" }}
+    >
       <CardActionArea>
-        <img src={`https://flagsapi.com/${props.country}/flat/64.png`}></img>
+        <img
+          alt="flag"
+          style={{ position: "absolute", top: "10px", right: "20px" }}
+          src={`https://flagsapi.com/${props.country}/flat/64.png`}
+        ></img>
         <CardMedia component="img" image={props.image} alt="green iguana" />
         <CardContent>
           <Typography

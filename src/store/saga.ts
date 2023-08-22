@@ -20,6 +20,7 @@ function* getCart() {
 }
 function* addToCart(action: PayloadAction<Product>) {
   const cart: Product[] | undefined = yield storage.read(LocalStorageKeys.CART);
+  
   if (!cart) {
     storage.write(LocalStorageKeys.CART, [action.payload]);
   } else if (cart) {
