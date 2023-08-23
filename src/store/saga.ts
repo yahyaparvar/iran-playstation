@@ -5,10 +5,12 @@ import { put, takeLatest } from "redux-saga/effects";
 import { globalActions } from "./slice";
 import { LocalStorageKeys, storage } from "./storage";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { Product } from "app/containers/Home/types";
+import { CartProduct, Product } from "app/containers/Home/types";
 
 function* getCart() {
-  const cart: Product[] | undefined = yield storage.read(LocalStorageKeys.CART);
+  const cart: CartProduct[] | undefined = yield storage.read(
+    LocalStorageKeys.CART
+  );
   if (cart) {
     yield put(globalActions.setCart(cart));
     console.log(cart);
@@ -18,18 +20,34 @@ function* getCart() {
     yield put(globalActions.setCart([]));
   }
 }
-function* addToCart(action: PayloadAction<Product>) {
-  const cart: Product[] | undefined = yield storage.read(LocalStorageKeys.CART);
-  
+function* addToCart(action: PayloadAction<CartProduct>) {
+  const cart: CartProduct[] | undefined = yield storage.read(
+    LocalStorageKeys.CART
+  );
   if (!cart) {
     storage.write(LocalStorageKeys.CART, [action.payload]);
   } else if (cart) {
-    const newCart = [...cart, action.payload];
-    storage.write(LocalStorageKeys.CART, newCart);
+    if (cart.find((item) => item.slug === action.payload.slug)) {
+      const newCart = cart.map((item) => {
+        if (item.slug === action.payload.slug) {
+          return {
+            ...item,
+            quantity: item.quantity + 1,
+          };
+        }
+        return item;
+      });
+      storage.write(LocalStorageKeys.CART, newCart);
+    } else {
+      const newCart = [...cart, action.payload];
+      storage.write(LocalStorageKeys.CART, newCart);
+    }
   }
 }
 function* removeFromCart(action: PayloadAction<Product>) {
-  const cart: Product[] | undefined = yield storage.read(LocalStorageKeys.CART);
+  const cart: CartProduct[] | undefined = yield storage.read(
+    LocalStorageKeys.CART
+  );
   if (!cart) {
     storage.write(LocalStorageKeys.CART, [action.payload]);
   } else if (cart) {

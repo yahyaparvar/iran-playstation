@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { ProductDetail } from "./containers/ProductDetail/Loadable";
 import { globalActions } from "store/slice";
 import { useDispatch } from "react-redux";
+import { Checkout } from "./containers/Checkout/Loadable";
 interface CustomRouterProps {
   history: History;
   children?: ReactElement;
@@ -45,6 +46,7 @@ function App() {
         <Routes>
           <Route path={AppPages.RootPage} element={<Home />} />
           <Route path={AppPages.ProductDetail} element={<ProductDetail />} />
+          <Route path={AppPages.Checkout} element={<Checkout />} />
           <Route path={AppPages.NotFoundPage} element={<NotFoundPage />} />
         </Routes>
       </CustomRouter>

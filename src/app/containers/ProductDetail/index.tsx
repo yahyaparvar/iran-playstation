@@ -4,10 +4,11 @@
  *
  */
 
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useSelector, useDispatch } from "react-redux";
-
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
 import { useInjectReducer, useInjectSaga } from "store/redux-injectors";
 import {
   product_detailActions,
@@ -19,6 +20,7 @@ import { productDetailSaga } from "./saga";
 import { useParams } from "react-router-dom";
 import { productDetailSelectors } from "./selectors";
 import { globalActions, useGlobalSlice } from "store/slice";
+import { MenuItem, Select } from "@mui/material";
 
 interface Props {}
 
@@ -29,6 +31,7 @@ export const ProductDetail = memo((props: Props) => {
   const isLoading = useSelector(productDetailSelectors.isProductDetailLoading);
   const product = useSelector(productDetailSelectors.productDetail);
   const dispatch = useDispatch();
+  const [selectedPrice, setPrice] = useState(0);
   const { id } = useParams();
   useEffect(() => {
     if (id) {
@@ -37,7 +40,7 @@ export const ProductDetail = memo((props: Props) => {
   }, []);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
+  const prices = ["10", "20", "30", "40", "50", "60", "70", "80", "90", "100"];
   return (
     <>
       <Helmet>
@@ -51,11 +54,36 @@ export const ProductDetail = memo((props: Props) => {
               <div>{product?.name}</div>
               <button
                 onClick={() => {
-                  dispatch(globalActions.addToCart(product));
+                  dispatch(
+                    globalActions.addToCart({
+                      id: product.id,
+                      name: product.name,
+                      quantity: 1,
+                      country: product.country,
+                      description: product.description,
+                      image: product.image,
+                      price: selectedPrice,
+                      slug: product.slug,
+                    })
+                  );
                 }}
               >
                 Add to cart
               </button>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={selectedPrice.toString()}
+                label="price"
+                defaultValue="10"
+                onChange={(e) => {
+                  setPrice(parseFloat(e.target.value.toString()));
+                }}
+              >
+                {prices.map((item) => (
+                  <MenuItem value={item}>{item}</MenuItem>
+                ))}
+              </Select>
             </>
           )}
     </>

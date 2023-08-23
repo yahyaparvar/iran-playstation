@@ -16,7 +16,12 @@ export default function PSNCard(props: Props) {
   return (
     <Card
       onClick={props.onClick}
-      sx={{ maxWidth: 345, marginLeft: 8, position: "relative" }}
+      sx={{
+        maxWidth: 345,
+        marginLeft: 8,
+        marginBottom: 8,
+        position: "relative",
+      }}
     >
       <CardActionArea>
         <img

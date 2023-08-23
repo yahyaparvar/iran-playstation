@@ -1,5 +1,5 @@
 import { ProductDetailState } from "app/containers/ProductDetail/types";
-import { CheckoutState } from 'app/containers/Checkout/types';
+import { CheckoutState } from "app/containers/Checkout/types";
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 import { HomeState } from "app/containers/Home/types";
@@ -13,5 +13,6 @@ import { HomeState } from "app/containers/Home/types";
 export interface RootState {
   global?: any;
   home?: HomeState;
+  checkout: CheckoutState;
   productDetail: ProductDetailState;
 }

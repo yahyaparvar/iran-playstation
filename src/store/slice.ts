@@ -2,7 +2,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "store/toolkit";
 import { globalSaga } from "./saga";
 import { useInjectReducer, useInjectSaga } from "./redux-injectors";
-import { Product } from "app/containers/Home/types";
+import { CartProduct, Product } from "app/containers/Home/types";
 interface ContainerState {
   loggedIn: boolean;
   cart: Product[] | undefined;
@@ -27,7 +27,7 @@ const globalSlice = createSlice({
     setCart(state, action: PayloadAction<Product[]>) {
       state.cart = [...action.payload];
     },
-    addToCart(state, action: PayloadAction<Product>) {
+    addToCart(state, action: PayloadAction<CartProduct>) {
       if (state.cart) {
         state.cart.push(action.payload);
       }

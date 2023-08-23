@@ -1,13 +1,15 @@
 export interface Product {
   id: number;
   name: string;
-  price: number;
   description: string;
   image: string;
   country: string;
   slug: string;
 }
-
+export type CartProduct = Product & {
+  price: number;
+  quantity: number;
+};
 export interface HomeState {
   products: Product[];
 }
