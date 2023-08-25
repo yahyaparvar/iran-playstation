@@ -27,7 +27,13 @@ function* addToCart(action: PayloadAction<CartProduct>) {
   if (!cart) {
     storage.write(LocalStorageKeys.CART, [action.payload]);
   } else if (cart) {
-    if (cart.find((item) => item.slug === action.payload.slug)) {
+    if (
+      cart.find(
+        (item) =>
+          item.slug === action.payload.slug &&
+          item.price === action.payload.price
+      )
+    ) {
       const newCart = cart.map((item) => {
         if (item.slug === action.payload.slug) {
           return {
@@ -42,6 +48,7 @@ function* addToCart(action: PayloadAction<CartProduct>) {
       const newCart = [...cart, action.payload];
       storage.write(LocalStorageKeys.CART, newCart);
     }
+    yield put(globalActions.getCart());
   }
 }
 function* removeFromCart(action: PayloadAction<Product>) {

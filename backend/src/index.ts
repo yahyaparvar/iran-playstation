@@ -6,6 +6,7 @@ import { productRouter } from "./routers/product_router";
 import { seedRouter } from "./routers/seed_roouter";
 import { userRouter } from "./routers/user_router";
 import cors from "cors";
+import { orderRouter } from "./routers/order_router";
 dotenv.config();
 
 const MONGODB_URL =
@@ -36,6 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/products", productRouter);
 app.use("/users", userRouter);
 app.use("/seed", seedRouter);
+app.use("/orders", orderRouter);
 const PORT = 8000;
 app.listen(PORT, () => {
   console.log(`server started at http://localhost:${PORT}`);

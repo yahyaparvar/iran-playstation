@@ -1,9 +1,22 @@
-import styled from "styled-components";
-import { COLUMN_ALIGN_START__JUSTIFY_CENTER } from "styles/globalStyles";
+import { styled } from "styled-components";
 
-export const Wrapper = styled.div`
-  ${COLUMN_ALIGN_START__JUSTIFY_CENTER}
-  width:100%;
+export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+export const CartContainer = styled.div`
+  width: 300px;
+  margin-right: 20px;
+  direction: rtl;
+`;
+
+export const CartItem = styled.div`
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
 `;
 
 export const Form = styled.form`
@@ -40,13 +53,9 @@ export const Button = styled.button`
   cursor: pointer;
 `;
 
-export const CartContainer = styled.div`
-  width: 300px;
-  margin-right: 20px;
-`;
-
-export const CartItem = styled.div`
-  border: 1px solid #ccc;
+export const CartSummary = styled.div`
+  margin-top: 20px;
   padding: 10px;
-  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
 `;
