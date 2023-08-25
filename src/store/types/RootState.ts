@@ -1,5 +1,7 @@
 import { ProductDetailState } from "app/containers/ProductDetail/types";
 import { CheckoutState } from "app/containers/Checkout/types";
+import { SignupState } from 'app/containers/Signup/types';
+import { LoginState } from 'app/containers/Login/types';
 // [IMPORT NEW CONTAINERSTATE ABOVE] < Needed for generating containers seamlessly
 
 import { HomeState } from "app/containers/Home/types";
@@ -15,4 +17,6 @@ export interface RootState {
   home?: HomeState;
   checkout: CheckoutState;
   productDetail: ProductDetailState;
+  signup:SignupState
+  login:LoginState
 }

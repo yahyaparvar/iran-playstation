@@ -1,5 +1,6 @@
 export enum LocalStorageKeys {
   CART = "CART",
+  AUTH = "AUTH",
 }
 
 export enum SessionStorageKeys {

@@ -13,6 +13,9 @@ import {
   FormGroup,
   Input,
 } from "./styles";
+import { LocalStorageKeys, storage } from "store/storage";
+import history from "router/history";
+import { AppPages } from "app/types";
 
 export const Checkout = memo(() => {
   const cart = useSelector(globalSelectors.cart);
@@ -22,7 +25,11 @@ export const Checkout = memo(() => {
     e.preventDefault();
     // Handle form submission logic here
   };
-
+  const handleBuyClick = () => {
+    if (!storage.read(LocalStorageKeys.AUTH)) {
+      history.push(AppPages.Login);
+    }
+  };
   return (
     <Container>
       <CartContainer>
@@ -58,7 +65,9 @@ export const Checkout = memo(() => {
           ))}
           <p>Total: ${cartSummary.totalAmount}</p>
         </CartSummary>
-        <Button type="submit">Buy</Button>
+        <Button type="submit" onClick={handleBuyClick}>
+          Buy
+        </Button>
       </Form>
     </Container>
   );
