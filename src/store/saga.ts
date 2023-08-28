@@ -59,7 +59,7 @@ function* removeFromCart(action: PayloadAction<Product>) {
     storage.write(LocalStorageKeys.CART, [action.payload]);
   } else if (cart) {
     const newCart = cart.filter(
-      (item: Product) => item.id !== action.payload.id
+      (item: Product) => item._id !== action.payload._id
     );
     storage.write(LocalStorageKeys.CART, newCart);
   }

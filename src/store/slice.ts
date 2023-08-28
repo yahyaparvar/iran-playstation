@@ -34,7 +34,9 @@ const globalSlice = createSlice({
     },
     removeFromCart(state, action: PayloadAction<Product>) {
       if (state.cart) {
-        state.cart = state.cart.filter((item) => item.id !== action.payload.id);
+        state.cart = state.cart.filter(
+          (item) => item._id !== action.payload._id
+        );
       }
     },
   },

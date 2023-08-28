@@ -56,7 +56,7 @@ export const ProductDetail = memo((props: Props) => {
                 onClick={() => {
                   dispatch(
                     globalActions.addToCart({
-                      id: product.id,
+                      _id: product._id,
                       name: product.name,
                       quantity: 1,
                       country: product.country,

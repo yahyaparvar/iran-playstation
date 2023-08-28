@@ -35,7 +35,7 @@ export const Checkout = memo(() => {
       <CartContainer>
         <h2>Cart Items</h2>
         {cart.map((item: CartProduct) => (
-          <CartItem key={item.id}>
+          <CartItem key={item._id}>
             <h3>
               {item.name} X{item.quantity}
             </h3>
@@ -59,7 +59,7 @@ export const Checkout = memo(() => {
         <CartSummary>
           <h3>Cart Summary</h3>
           {cart.map((item: CartProduct) => (
-            <p key={item.id}>
+            <p key={item._id}>
               {item.name}: ${item.price} +{item.quantity}
             </p>
           ))}

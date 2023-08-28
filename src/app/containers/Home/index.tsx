@@ -47,7 +47,7 @@ export function Home(props: Props) {
             title={product.country}
             description={product.description}
             image={product.image}
-            key={product.id}
+            key={product._id}
           />
         ))}
     </Wrapper>
