@@ -1,26 +1,39 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { PayloadAction } from '@reduxjs/toolkit';
-import { ContainerState } from './types';
+import { PayloadAction } from "@reduxjs/toolkit";
+import { ContainerState } from "./types";
 import { createSlice } from "store/toolkit";
 import { useInjectReducer, useInjectSaga } from "store/redux-injectors";
 
-import { loginSaga } from './saga';
+import { loginSaga } from "./saga";
 
 // The initial state of the Login container
-export const initialState: ContainerState = {};
+export const initialState: ContainerState = {
+  loginLoading: false,
+  loginFailedMessage: "",
+};
 
 const loginSlice = createSlice({
-  name: 'login',
+  name: "login",
   initialState,
   reducers: {
-    someAction(state, action: PayloadAction<any>) {},
+    login(state, action: PayloadAction<{ email: string; password: string }>) {},
+    setLoginLoading(state, action: PayloadAction<boolean>) {
+      state.loginLoading = action.payload;
+    },
+    setLoginFailedMessage(state, action: PayloadAction<string>) {
+      state.loginFailedMessage = action.payload;
+    }
   },
 });
 
-export const { actions:loginActions, reducer:loginReducer, name: sliceKey } = loginSlice;
+export const {
+  actions: loginActions,
+  reducer: loginReducer,
+  name: sliceKey,
+} = loginSlice;
 
-export const useloginSlice=()=>{
-useInjectReducer({ key: sliceKey, reducer: loginReducer });
-useInjectSaga({ key: sliceKey, saga: loginSaga });
-return { loginActions }
-}
+export const useloginSlice = () => {
+  useInjectReducer({ key: sliceKey, reducer: loginReducer });
+  useInjectSaga({ key: sliceKey, saga: loginSaga });
+  return { loginActions };
+};

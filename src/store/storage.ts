@@ -1,6 +1,7 @@
 export enum LocalStorageKeys {
   CART = "CART",
   AUTH = "AUTH",
+  USER = "USER",
 }
 
 export enum SessionStorageKeys {
@@ -9,7 +10,11 @@ export enum SessionStorageKeys {
 
 export const storage = {
   write: (key: LocalStorageKeys, data: any) => {
-    localStorage[key] = JSON.stringify(data);
+    if (typeof data === "string") {
+      localStorage[key] = data;
+    } else {
+      localStorage[key] = JSON.stringify(data);
+    }
   },
   delete: (key: LocalStorageKeys) => {
     localStorage.removeItem(key);
