@@ -10,15 +10,16 @@ import { loginSaga } from "./saga";
 import { selectLogin } from "./selectors";
 import history from "router/history";
 import { AppPages } from "app/types";
+import SimpleInput from "app/components/common/inputs/simple";
+import { COLUMN_CENTER, ROW_CENTER } from "styles/globalStyles";
 
 const gradientColors = {
   start: "#2f5bd3",
   end: "#2a3489",
 };
 
-const backgroundImageUrl =
-  "https://t3.ftcdn.net/jpg/02/80/87/60/360_F_280876054_Mz306RfXfAcYtuSntlpDVqo1KF9CosS0.jpg";
-const playstationLogoUrl = "https://svgshare.com/i/wxK.svg";
+const backgroundImageUrl = "https://svgshare.com/i/x3y.svg";
+const playstationLogoUrl = "https://svgshare.com/i/x3z.svg";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -26,37 +27,29 @@ const validationSchema = Yup.object().shape({
 });
 
 const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${COLUMN_CENTER}
   min-height: 100vh;
-  background: linear-gradient(
-      to bottom right,
-      ${gradientColors.start},
-      ${gradientColors.end}
-    ),
-    url(${backgroundImageUrl}) center/cover no-repeat;
+  width: 100%;
+  background: url(${backgroundImageUrl}) center/cover no-repeat;
 `;
 
 const FormContainer = styled.div`
-  background-color: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 8px;
-  width: 300px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  ${COLUMN_CENTER}
 `;
 
 const LogoImage = styled.img`
-  width: 100px;
   margin-bottom: 20px;
+  height: 40px;
+  margin-right: 16px;
+  margin-bottom: -3px;
 `;
 
-const InputField = styled.input`
+const InputField = styled(SimpleInput)`
   width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  margin-bottom: 16px;
 `;
 
 const ErrorMessageStyled = styled.div`
@@ -78,12 +71,32 @@ const RegisterLink = styled.div`
   display: block;
   margin-top: 10px;
   text-decoration: none;
+  color: #fff;
 `;
 
 const HighlightedText = styled.a`
-  color: blue;
   cursor: pointer;
 `;
+const Title = styled.h2`
+  font-size: 24px;
+  ${ROW_CENTER}
+  font-weight: 600;
+  color: #fff;
+
+  margin-bottom: 20px;
+`;
+
+const Description = styled.p`
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+const Form = styled.form`
+  width: 100%;
+`;
+
 interface Props {}
 export function Login(props: Props) {
   useInjectReducer({ key: sliceKey, reducer: loginReducer });
@@ -104,46 +117,57 @@ export function Login(props: Props) {
   });
 
   return (
-    <Wrapper>
+    <>
       <Helmet>
         <title>Login</title>
         <meta name="description" content="Description of Login" />
       </Helmet>
-      <FormContainer>
-        <LogoImage src={playstationLogoUrl} alt="PlayStation Logo" />
-        <h2 style={{ marginBottom: "20px" }}>Login</h2>
-        <form onSubmit={formik.handleSubmit}>
-          <InputField
-            type="text"
-            name="email"
-            placeholder="Email"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.email}
-          />
-          {formik.touched.email && formik.errors.email ? (
-            <ErrorMessageStyled>{formik.errors.email}</ErrorMessageStyled>
-          ) : null}
-          <InputField
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.password}
-          />
-          {formik.touched.password && formik.errors.password ? (
-            <ErrorMessageStyled>{formik.errors.password}</ErrorMessageStyled>
-          ) : null}
-          <SubmitButton type="submit">Login</SubmitButton>
-        </form>
-        <RegisterLink>
-          Not signed up yet?{" "}
-          <HighlightedText onClick={handleRegisterClick}>
-            Register now!
-          </HighlightedText>
-        </RegisterLink>
-      </FormContainer>
-    </Wrapper>
+      <Wrapper>
+        <FormContainer>
+          <Title>
+            <LogoImage src={playstationLogoUrl} alt="PlayStation Logo" />
+            ورود
+          </Title>
+          <Description>
+            برای ورود به حساب کاربری خود ایمیل و رمز عبور خود را وارد کنید
+          </Description>
+          <Form onSubmit={formik.handleSubmit}>
+            <InputField
+              errormessage="Invalid email"
+              touched={formik.touched.email}
+              type="text"
+              name="email"
+              placeholder="Email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+            />
+            {formik.touched.email && formik.errors.email ? (
+              <ErrorMessageStyled>{formik.errors.email}</ErrorMessageStyled>
+            ) : null}
+            <InputField
+              errormessage="Invalid password"
+              touched={formik.touched.password}
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+            />
+            {formik.touched.password && formik.errors.password ? (
+              <ErrorMessageStyled>{formik.errors.password}</ErrorMessageStyled>
+            ) : null}
+            <SubmitButton type="submit">Login</SubmitButton>
+          </Form>
+          <RegisterLink>
+            هنوز کاربر ما نیستید؟{" "}
+            <HighlightedText onClick={handleRegisterClick}>
+              ثبت نام کنید  
+            </HighlightedText>
+          </RegisterLink>
+        </FormContainer>
+      </Wrapper>
+    </>
   );
 }

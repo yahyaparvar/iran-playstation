@@ -20,7 +20,7 @@ import { productDetailSaga } from "./saga";
 import { useParams } from "react-router-dom";
 import { productDetailSelectors } from "./selectors";
 import { globalActions, useGlobalSlice } from "store/slice";
-import { MenuItem, Select } from "@mui/material";
+import { Button, MenuItem, Select } from "@mui/material";
 
 interface Props {}
 
@@ -52,7 +52,8 @@ export const ProductDetail = memo((props: Props) => {
         : product && (
             <>
               <div>{product?.name}</div>
-              <button
+              <Button
+                sx={{ color: "white" }}
                 onClick={() => {
                   dispatch(
                     globalActions.addToCart({
@@ -69,7 +70,7 @@ export const ProductDetail = memo((props: Props) => {
                 }}
               >
                 Add to cart
-              </button>
+              </Button>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"

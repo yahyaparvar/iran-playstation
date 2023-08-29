@@ -43,7 +43,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  background-color:#006FCD ;
+  background-color:#00439C ;
 }
 *{
   font-family:"ir-sans" !important;

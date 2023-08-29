@@ -21,6 +21,7 @@ function* getCart() {
   }
 }
 function* addToCart(action: PayloadAction<CartProduct>) {
+  console.log({ SEX: "SEX" });
   const cart: CartProduct[] | undefined = yield storage.read(
     LocalStorageKeys.CART
   );
@@ -48,6 +49,7 @@ function* addToCart(action: PayloadAction<CartProduct>) {
       const newCart = [...cart, action.payload];
       storage.write(LocalStorageKeys.CART, newCart);
     }
+
     yield put(globalActions.getCart());
   }
 }
