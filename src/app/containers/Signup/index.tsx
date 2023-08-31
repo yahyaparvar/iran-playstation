@@ -1,69 +1,61 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
-import { useDispatch } from "react-redux";
+import styled from "styled-components";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import styled from "styled-components";
 import { useInjectReducer, useInjectSaga } from "redux-injectors";
+import { useDispatch } from "react-redux";
 import { signupActions, signupReducer, sliceKey } from "./slice";
 import { signupSaga } from "./saga";
+import { CustomInput } from "app/components/common/inputs/simple";
+import { COLUMN_CENTER, ROW_CENTER } from "styles/globalStyles";
 
 const gradientColors = {
   start: "#2f5bd3",
   end: "#2a3489",
 };
 
-const backgroundImageUrl =
-  "https://t3.ftcdn.net/jpg/02/80/87/60/360_F_280876054_Mz306RfXfAcYtuSntlpDVqo1KF9CosS0.jpg";
-const playstationLogoUrl = "https://svgshare.com/i/wxK.svg";
-
+const backgroundImageUrl = "https://svgshare.com/i/x3y.svg";
+const playstationLogoUrl = "https://svgshare.com/i/x3z.svg";
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string().required("Password is required"),
+  email: Yup.string().email("ایمیل نا معتبر").required("ایمیل الزامیست"),
+  password: Yup.string().required("لطفا رمز عبور را وارد کنید"),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")], "Passwords must match")
-    .required("Confirm Password is required"),
-  firstName: Yup.string().required("First Name is required"),
-  lastName: Yup.string().required("Last Name is required"),
+    .oneOf([Yup.ref("password")], "رمز عبور مطابقت ندارد")
+    .required("تکرار رمز عبور الزامیست"),
+  firstName: Yup.string().required("نام شما اجباریست"),
+  lastName: Yup.string().required("نام خانوادگی شما اجباریست"),
 });
 
 const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${COLUMN_CENTER}
   min-height: 100vh;
-  background: linear-gradient(
-      to bottom right,
-      ${gradientColors.start},
-      ${gradientColors.end}
-    ),
-    url(${backgroundImageUrl}) center/cover no-repeat;
+  width: 100%;
+  background: url(${backgroundImageUrl}) center/cover no-repeat;
 `;
 
 const FormContainer = styled.div`
-  background-color: rgba(255, 255, 255, 0.9);
   padding: 20px;
   border-radius: 8px;
-  width: 300px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  ${COLUMN_CENTER}
 `;
 
 const LogoImage = styled.img`
-  width: 100px;
   margin-bottom: 20px;
+  height: 40px;
+  margin-right: 16px;
+  margin-bottom: -3px;
 `;
 
-const InputField = styled.input`
+const InputRow = styled.div`
+  ${ROW_CENTER}
   width: 100%;
-  padding: 10px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  gap: 10px;
 `;
 
-const ErrorMessageStyled = styled.div`
-  color: red;
-  margin-top: 5px;
+const InputField = styled(CustomInput)`
+  width: 100%;
 `;
 
 const SubmitButton = styled.button`
@@ -76,9 +68,24 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
-const HighlightedText = styled.span`
-  color: blue;
-  cursor: pointer;
+const Title = styled.h2`
+  font-size: 24px;
+  ${ROW_CENTER}
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 20px;
+`;
+
+const Description = styled.p`
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+const Form = styled.form`
+  width: 100%;
 `;
 
 export function Signup() {
@@ -106,68 +113,72 @@ export function Signup() {
         <meta name="description" content="Description of Signup" />
       </Helmet>
       <FormContainer>
-        <LogoImage src={playstationLogoUrl} alt="PlayStation Logo" />
-        <h2 style={{ marginBottom: "20px" }}>Signup</h2>
-        <form onSubmit={formik.handleSubmit}>
+        <Title>
+          <LogoImage src={playstationLogoUrl} alt="PlayStation Logo" />
+          ثبت نام
+        </Title>
+        <Description>
+          برای ورود به حساب کاربری خود ایمیل و رمز عبور خود را وارد کنید
+        </Description>
+        <Form onSubmit={formik.handleSubmit}>
+          <InputRow>
+            <InputField
+              type="text"
+              touched={formik.touched.lastName}
+              error={formik.errors.lastName}
+              name="lastName"
+              placeholder="نام خانوادگی"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.lastName}
+            />
+            <InputField
+              touched={formik.touched.firstName}
+              error={formik.errors.firstName}
+              type="text"
+              name="firstName"
+              placeholder="نام"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.firstName}
+            />
+          </InputRow>
+
           <InputField
+            touched={formik.touched.email}
+            error={formik.errors.email}
             type="text"
             name="email"
-            placeholder="Email"
+            placeholder="ایمیل"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.email}
           />
-          {formik.touched.email && formik.errors.email ? (
-            <ErrorMessageStyled>{formik.errors.email}</ErrorMessageStyled>
-          ) : null}
+
           <InputField
+            touched={formik.touched.password}
+            error={formik.errors.password}
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="رمز عبور"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.password}
           />
-          {formik.touched.password && formik.errors.password ? (
-            <ErrorMessageStyled>{formik.errors.password}</ErrorMessageStyled>
-          ) : null}
+
           <InputField
+            touched={formik.touched.confirmPassword}
+            error={formik.errors.confirmPassword}
             type="password"
             name="confirmPassword"
-            placeholder="Confirm Password"
+            placeholder="تکرار رمز عبور"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.confirmPassword}
           />
-          {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-            <ErrorMessageStyled>
-              {formik.errors.confirmPassword}
-            </ErrorMessageStyled>
-          ) : null}
-          <InputField
-            type="text"
-            name="firstName"
-            placeholder="First Name"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.firstName}
-          />
-          {formik.touched.firstName && formik.errors.firstName ? (
-            <ErrorMessageStyled>{formik.errors.firstName}</ErrorMessageStyled>
-          ) : null}
-          <InputField
-            type="text"
-            name="lastName"
-            placeholder="Last Name"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.lastName}
-          />
-          {formik.touched.lastName && formik.errors.lastName ? (
-            <ErrorMessageStyled>{formik.errors.lastName}</ErrorMessageStyled>
-          ) : null}
-          <SubmitButton type="submit">Signup</SubmitButton>
-        </form>
+
+          <SubmitButton type="submit">ثبت نام</SubmitButton>
+        </Form>
       </FormContainer>
     </Wrapper>
   );

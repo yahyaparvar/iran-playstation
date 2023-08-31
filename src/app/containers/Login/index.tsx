@@ -67,6 +67,7 @@ const RegisterLink = styled.div`
 
 const HighlightedText = styled.a`
   cursor: pointer;
+  color:#ff5e00;
 `;
 const Title = styled.h2`
   font-size: 24px;

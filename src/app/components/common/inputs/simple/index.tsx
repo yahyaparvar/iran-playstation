@@ -21,7 +21,12 @@ const BaseCustomInput: React.FC<CustomInputProps> = ({
   return (
     <InputContainer {...props} hasError={touched && !!error}>
       <LeftIconWrapper>{leftIcon}</LeftIconWrapper>
-      <TextInput type="text" dir={rtl ? "rtl" : "ltr"} {...props} />
+      <TextInput
+        autoComplete="new-password"
+        type="text"
+        dir={rtl ? "rtl" : "ltr"}
+        {...props}
+      />
       <RightIconWrapper>{rightIcon}</RightIconWrapper>
       {touched && error && <ErrorText>{error}</ErrorText>}
     </InputContainer>
@@ -59,9 +64,9 @@ const TextInput = styled.input`
 
 const ErrorText = styled.p`
   color: red;
-  font-size: 14px;
+  font-size: 11px;
   position: absolute;
-  top: 7px;
+  bottom: -30px;
   margin-top: 4px;
 `;
 
@@ -81,7 +86,7 @@ const RightIconWrapper = styled(Icon)`
 
 const CustomInputWrapper = styled.div`
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 `;
 
 export const CustomInput: React.FC<CustomInputProps> = ({ ...props }) => (
