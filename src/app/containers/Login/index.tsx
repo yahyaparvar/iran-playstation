@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
@@ -10,9 +10,11 @@ import { loginSaga } from "./saga";
 import { selectLogin } from "./selectors";
 import history from "router/history";
 import { AppPages } from "app/types";
-import SimpleInput from "app/components/common/inputs/simple";
+import { CustomInput } from "app/components/common/inputs/simple";
 import { COLUMN_CENTER, ROW_CENTER } from "styles/globalStyles";
-
+import { Email } from "@mui/icons-material"; // Import the EmailIcon
+import { Lock } from "@mui/icons-material"; // Import the LockIcon
+import PrimaryButton from "app/components/common/buttons/primary";
 const gradientColors = {
   start: "#2f5bd3",
   end: "#2a3489",
@@ -22,8 +24,8 @@ const backgroundImageUrl = "https://svgshare.com/i/x3y.svg";
 const playstationLogoUrl = "https://svgshare.com/i/x3z.svg";
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string().required("Password is required"),
+  email: Yup.string().email("ایمیل نا معتبر").required("ایمیل از واجباته"),
+  password: Yup.string().required("رمز عبور از واجباته"),
 });
 
 const Wrapper = styled.div`
@@ -47,24 +49,13 @@ const LogoImage = styled.img`
   margin-bottom: -3px;
 `;
 
-const InputField = styled(SimpleInput)`
+const InputField = styled(CustomInput)`
   width: 100%;
-  margin-bottom: 16px;
 `;
 
-const ErrorMessageStyled = styled.div`
-  color: red;
-  margin-top: 5px;
-`;
-
-const SubmitButton = styled.button`
+const SubmitButton = styled(PrimaryButton)`
   width: 100%;
-  padding: 10px;
-  background-color: ${gradientColors.start};
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  margin-bottom: 7px;
 `;
 
 const RegisterLink = styled.div`
@@ -96,9 +87,17 @@ const Description = styled.p`
 const Form = styled.form`
   width: 100%;
 `;
-
+const EmailIcon = styled(Email)`
+  color: #fff !important;
+`;
+const LockIcon = styled(Lock)`
+  color: #fff !important;
+`;
 interface Props {}
 export function Login(props: Props) {
+  useEffect(() => {
+    // Manipulate the input elements here using JavaScript
+  }, []);
   useInjectReducer({ key: sliceKey, reducer: loginReducer });
   useInjectSaga({ key: sliceKey, saga: loginSaga });
   const handleRegisterClick = () => {
@@ -131,39 +130,37 @@ export function Login(props: Props) {
           <Description>
             برای ورود به حساب کاربری خود ایمیل و رمز عبور خود را وارد کنید
           </Description>
-          <Form onSubmit={formik.handleSubmit}>
+          <Form autoComplete="new-password" onSubmit={formik.handleSubmit}>
             <InputField
-              errormessage="Invalid email"
-              touched={formik.touched.email}
+              autoComplete="new-password"
+              rightIcon={<EmailIcon />}
               type="text"
               name="email"
-              placeholder="Email"
+              touched={formik.touched.email}
+              error={formik.errors.email}
+              placeholder="ایمیل"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
             />
-            {formik.touched.email && formik.errors.email ? (
-              <ErrorMessageStyled>{formik.errors.email}</ErrorMessageStyled>
-            ) : null}
             <InputField
-              errormessage="Invalid password"
+              rightIcon={<LockIcon />}
               touched={formik.touched.password}
+              error={formik.errors.password}
+              autoComplete="new-password"
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder="رمز عبور"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
             />
-            {formik.touched.password && formik.errors.password ? (
-              <ErrorMessageStyled>{formik.errors.password}</ErrorMessageStyled>
-            ) : null}
-            <SubmitButton type="submit">Login</SubmitButton>
+            <SubmitButton type="submit">ورود</SubmitButton>
           </Form>
           <RegisterLink>
             هنوز کاربر ما نیستید؟{" "}
             <HighlightedText onClick={handleRegisterClick}>
-              ثبت نام کنید  
+              ثبت نام کنید
             </HighlightedText>
           </RegisterLink>
         </FormContainer>

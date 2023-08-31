@@ -22,18 +22,18 @@ export const PlaceHolderStyle = {
   input: {
     "&::placeholder": {
       opacity: 1,
-      color: "var(--greyscale-400)",
+      color: "#fff",
     },
   },
 };
 export const Label = styled(InputLabel)<{ error?: boolean }>`
-  color: var(--greyscale-500);
+  color: white;
   align-self: flex-start;
   margin-bottom: 8px;
   ${({ error }) =>
     error &&
     css`
-      color: var(--error-600);
+      color: red;
     `}
 `;
 export const StyledInput = styled(TextField)<
@@ -72,25 +72,25 @@ export const StyledInput = styled(TextField)<
     }
   }}
   .MuiOutlinedInput-root {
+    textdirection: rtl;
+    color: white;
     border-radius: 12px;
     &:hover fieldset {
-      border-color: var(--greyscale-300);
+      border-color: white;
     }
     &.Mui-focused fieldset {
-      border: 1px solid var(--greyscale-600);
+      border: 1px solid white;
     }
     &.Mui-error fieldset {
-      border-color: var(--error-500);
+      border-color: red;
     }
   }
   .MuiFormHelperText-root.Mui-error {
-    align-self: flex-start;
-    color: var(--error-600);
+    color: red;
   }
   .MuiOutlinedInput-notchedOutline {
-    border-color: var(--greyscale-100);
+    border-color: white;
   }
-
   font-weight: 400;
   font-size: 15px;
 `;

@@ -47,7 +47,6 @@ html {
 }
 *{
   font-family:"ir-sans" !important;
-  color: black;
   box-sizing:border-box ;
 }
 `;

@@ -1,70 +1,91 @@
-import {
-  InputAdornment,
-  outlinedInputClasses,
-  styled,
-  TextField,
-  textFieldClasses,
-  TextFieldProps,
-} from "@mui/material"
-import React, { FC } from "react"
-import {
-  InputProps,
-  Label,
-  PlaceHolderStyle,
-  StyledInput,
-  Wrapper,
-} from "../baseInputStyles"
-import { Divider, InputActionComponent } from "../password/styles"
+import React, { InputHTMLAttributes } from "react";
+import styled, { css } from "styled-components";
+import { COLUMN_ALIGN_END__JUSTIFY_CENTER } from "styles/globalStyles";
 
-const SimpleInput: FC<InputProps> = ({
-  touched,
-  errormessage,
-  label,
-  customsize = "medium",
-  className,
-  rightaction,
-  leftaction,
-  ...props
-}) => {
-  const error = errormessage !== undefined
-  return (
-    <Wrapper className={className}>
-      <Label error={touched && error ? true : false}>{label}</Label>
-      <StyledInput
-        {...props}
-        label=""
-        customsize={customsize}
-        helperText={touched && errormessage}
-        error={touched && error ? true : false}
-        sx={PlaceHolderStyle}
-        spellCheck={false}
-        InputProps={
-          leftaction
-            ? {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <InputActionComponent onClick={leftaction.onClick}>
-                      {leftaction.component}
-                    </InputActionComponent>
-                  </InputAdornment>
-                ),
-              }
-            : rightaction
-            ? {
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Divider />
-                    <InputActionComponent onClick={rightaction.onClick}>
-                      {rightaction.component}
-                    </InputActionComponent>
-                  </InputAdornment>
-                ),
-              }
-            : undefined
-        }
-      />
-    </Wrapper>
-  )
+interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  rtl?: boolean;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  error?: string;
+  touched?: boolean;
 }
 
-export default SimpleInput
+const BaseCustomInput: React.FC<CustomInputProps> = ({
+  rtl,
+  leftIcon,
+  rightIcon,
+  error,
+  touched,
+  ...props
+}) => {
+  return (
+    <InputContainer {...props} hasError={touched && !!error}>
+      <LeftIconWrapper>{leftIcon}</LeftIconWrapper>
+      <TextInput type="text" dir={rtl ? "rtl" : "ltr"} {...props} />
+      <RightIconWrapper>{rightIcon}</RightIconWrapper>
+      {touched && error && <ErrorText>{error}</ErrorText>}
+    </InputContainer>
+  );
+};
+
+const InputContainer = styled.div<{ hasError?: boolean }>`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid ${(props) => (props.hasError ? "red" : "white")};
+  background-color: transparent;
+  border-radius: 8px;
+  padding: 8px;
+  transition: all 0.3s;
+`;
+
+const TextInput = styled.input`
+  background-color: transparent;
+  border: none;
+  color: white;
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+  text-align: right;
+  &::placeholder {
+    color: white;
+  }
+  &:focus {
+    ${InputContainer} {
+      border: 1px solid green;
+    }
+  }
+`;
+
+const ErrorText = styled.p`
+  color: red;
+  font-size: 14px;
+  position: absolute;
+  top: 7px;
+  margin-top: 4px;
+`;
+
+const Icon = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 0 4px;
+`;
+
+const LeftIconWrapper = styled(Icon)`
+  order: 0;
+`;
+
+const RightIconWrapper = styled(Icon)`
+  order: 1;
+`;
+
+const CustomInputWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 16px;
+`;
+
+export const CustomInput: React.FC<CustomInputProps> = ({ ...props }) => (
+  <CustomInputWrapper>
+    <BaseCustomInput {...props} />
+  </CustomInputWrapper>
+);
