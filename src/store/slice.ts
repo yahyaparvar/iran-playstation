@@ -3,9 +3,16 @@ import { createSlice } from "store/toolkit";
 import { globalSaga } from "./saga";
 import { useInjectReducer, useInjectSaga } from "./redux-injectors";
 import { CartProduct, Product } from "app/containers/Home/types";
+export interface UserInfo {
+  email: string;
+  name: string;
+  token: string;
+  memberSince: string;
+}
 interface ContainerState {
   loggedIn: boolean;
   cart: Product[] | undefined;
+  userInfo?: UserInfo;
 }
 // The initial state of the LoginPage container
 export const initialState: ContainerState = {
@@ -22,6 +29,9 @@ const globalSlice = createSlice({
       if (action.payload === false) {
         localStorage.clear();
       }
+    },
+    setUserInfo(state, action: PayloadAction<UserInfo>) {
+      state.userInfo = action.payload;
     },
     getCart(state) {},
     setCart(state, action: PayloadAction<Product[]>) {

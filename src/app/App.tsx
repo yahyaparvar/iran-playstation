@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { Checkout } from "./containers/Checkout/Loadable";
 import { Signup } from "./containers/Signup/Loadable";
 import { Login } from "./containers/Login/Loadable";
+import { Footer } from "./components/common/footer";
 interface CustomRouterProps {
   history: History;
   children?: ReactElement;
@@ -44,6 +45,7 @@ function App() {
   return (
     <AppWrapper>
       <Header />
+      <Placeholder />
       <CustomRouter history={history}>
         <Routes>
           <Route path={AppPages.RootPage} element={<Home />} />
@@ -54,11 +56,15 @@ function App() {
           <Route path={AppPages.NotFoundPage} element={<NotFoundPage />} />
         </Routes>
       </CustomRouter>
+      <Footer />
     </AppWrapper>
   );
 }
 const AppWrapper = styled.div`
   width: 100%;
   min-height: 100vh;
+`;
+const Placeholder = styled.div`
+  margin-top: 170px;
 `;
 export default App;

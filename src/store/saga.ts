@@ -1,7 +1,7 @@
 // import { take, call, put, select, takeLatest } from 'redux-saga/effects';
 // import { actions } from './slice';
 
-import { put, takeLatest } from "redux-saga/effects";
+import { put, takeEvery, takeLatest } from "redux-saga/effects";
 import { globalActions } from "./slice";
 import { LocalStorageKeys, storage } from "./storage";
 import { PayloadAction } from "@reduxjs/toolkit";
@@ -13,7 +13,6 @@ function* getCart() {
   );
   if (cart) {
     yield put(globalActions.setCart(cart));
-    console.log(cart);
   }
   if (!cart) {
     storage.write(LocalStorageKeys.CART, []);
@@ -67,7 +66,7 @@ function* removeFromCart(action: PayloadAction<Product>) {
   }
 }
 export function* globalSaga() {
-  yield takeLatest(globalActions.getCart.type, getCart);
+  yield takeEvery(globalActions.getCart.type, getCart);
   yield takeLatest(globalActions.addToCart.type, addToCart);
   yield takeLatest(globalActions.removeFromCart.type, removeFromCart);
 }

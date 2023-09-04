@@ -44,7 +44,7 @@ export function Home(props: Props) {
             }}
             country={product.country}
             action="خرید"
-            title={product.country}
+            title={product.name}
             description={product.description}
             image={product.image}
             key={product._id}

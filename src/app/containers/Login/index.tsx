@@ -15,13 +15,11 @@ import { COLUMN_CENTER, ROW_CENTER } from "styles/globalStyles";
 import { Email } from "@mui/icons-material"; // Import the EmailIcon
 import { Lock } from "@mui/icons-material"; // Import the LockIcon
 import PrimaryButton from "app/components/common/buttons/primary";
+import { backgroundImageUrl, playstationLogoUrl } from "app/constants";
 const gradientColors = {
   start: "#2f5bd3",
   end: "#2a3489",
 };
-
-const backgroundImageUrl = "https://svgshare.com/i/x3y.svg";
-const playstationLogoUrl = "https://svgshare.com/i/x3z.svg";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("ایمیل نا معتبر").required("ایمیل از واجباته"),
@@ -67,7 +65,7 @@ const RegisterLink = styled.div`
 
 const HighlightedText = styled.a`
   cursor: pointer;
-  color:#ff5e00;
+  color: #e14a9d;
 `;
 const Title = styled.h2`
   font-size: 24px;

@@ -43,10 +43,10 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  background-color:#00439C ;
+  background-color:#fff;
 }
 *{
-  font-family:"ir-sans" !important;
+  font-family:"Noto Sans Arabic", "Inter", sans-serif!important;
   box-sizing:border-box ;
 }
 `;

@@ -1,54 +1,97 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions } from "@mui/material";
-interface Props {
+import PrimaryButton from "app/components/common/buttons/primary";
+import React, { useState } from "react";
+import styled from "styled-components";
+import { COLUMN_CENTER } from "styles/globalStyles";
+
+interface ProductCardProps {
   title: string;
   description: string;
   image: string;
-  action: string;
   country: string;
+  action: string;
   onClick: () => void;
 }
-export default function PSNCard(props: Props) {
+
+const ProductCardContainer = styled.div`
+  border: 1px solid #ddd;
+  cursor: pointer;
+  background-color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 10px;
+  width: 300px;
+  border-radius: 5px;
+  transition: transform 0.2s ease;
+  ${COLUMN_CENTER}
+  &:hover {
+    transform: scale(1.05);
+  }
+  position: relative; /* Added position relative for absolute positioning */
+`;
+
+const ProductImage = styled.img`
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+const ProductName = styled.h3`
+  font-size: 16px;
+  font-weight: 500;
+  align-self: flex-end;
+  direction: rtl;
+  margin: 10px 0;
+`;
+const ProductAvailablity = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+  align-self: flex-end;
+  direction: rtl;
+  color: green;
+`;
+
+const ProductDescription = styled.p`
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 0;
+  align-self: flex-end;
+`;
+
+const ProductCountryFlag = styled.img`
+  position: absolute;
+  top: 23px;
+  right: 27px;
+  width: 46px;
+`;
+
+const ActionButton = styled.p`
+  font-size: 18px;
+  font-weight: 800;
+  align-self: flex-start;
+`;
+
+const ProductCard: React.FC<ProductCardProps> = ({
+  title,
+  description,
+  image,
+  country,
+  action,
+  onClick,
+}) => {
   return (
-    <Card
-      onClick={props.onClick}
-      sx={{
-        maxWidth: 345,
-        marginLeft: 8,
-        marginBottom: 8,
-        position: "relative",
-      }}
-    >
-      <CardActionArea>
-        <img
-          alt="flag"
-          style={{ position: "absolute", top: "10px", right: "20px" }}
-          src={`https://flagsapi.com/${props.country}/flat/64.png`}
-        ></img>
-        <CardMedia component="img" image={props.image} alt="green iguana" />
-        <CardContent>
-          <Typography
-            sx={{ color: "black" }}
-            gutterBottom
-            variant="h5"
-            component="div"
-          >
-            $10 - $100
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {props.description}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          {props.action}
-        </Button>
-      </CardActions>
-    </Card>
+    <ProductCardContainer onClick={onClick}>
+      <ProductImage src={image} alt={title} />
+      <ProductCountryFlag
+        src={`https://flagsapi.com/${country}/flat/64.png`}
+        alt={`${country} Flag`}
+      />
+      <ProductName>{title}</ProductName>
+      <ProductDescription>{description}</ProductDescription>
+      <ProductAvailablity>موجود</ProductAvailablity>
+      <ActionButton onClick={onClick}>از ۵۰۰،۰۰۰ تومان</ActionButton>
+    </ProductCardContainer>
   );
-}
+};
+
+export default ProductCard;
