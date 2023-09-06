@@ -10,6 +10,15 @@ export const Wrapper = styled.div`
   ${ROW_CENTER}
   position:fixed;
 `;
+export const PageText = styled.a`
+  ${ROW_CENTER}
+  font-size: 16px;
+  margin: 0 20px;
+  cursor: pointer;
+  padding: 0 auto;
+  font-weight: 600;
+  color: #000;
+`;
 export const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;

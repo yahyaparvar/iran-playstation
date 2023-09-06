@@ -1,17 +1,17 @@
-import { useSelector } from "react-redux";
-import { CartProduct } from "../Home/types";
-import { globalSelectors } from "store/selectors";
 import { memo } from "react";
+import { useSelector } from "react-redux";
+import { globalSelectors } from "store/selectors";
+import { CartProduct } from "../Home/types";
 import {
+  Container,
   CartContainer,
   CartItem,
-  Label,
-  CartSummary,
-  Button,
-  Container,
   Form,
   FormGroup,
   Input,
+  Label,
+  Button,
+  CartSummary,
 } from "./styles";
 import { LocalStorageKeys, storage } from "store/storage";
 import history from "router/history";
@@ -25,15 +25,17 @@ export const Checkout = memo(() => {
     e.preventDefault();
     // Handle form submission logic here
   };
+
   const handleBuyClick = () => {
     if (!storage.read(LocalStorageKeys.AUTH)) {
       history.push(AppPages.Login);
     }
   };
+
   return (
     <Container>
       <CartContainer>
-        <h2>Cart Items</h2>
+        <h2>Your Cart</h2>
         {cart.map((item: CartProduct) => (
           <CartItem key={item._id}>
             <h3>
@@ -45,19 +47,23 @@ export const Checkout = memo(() => {
       </CartContainer>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
-          <Label>Name</Label>
-          <Input type="text" name="name" />
+          <Label>Full Name</Label>
+          <Input type="text" name="name" placeholder="John Doe" />
         </FormGroup>
         <FormGroup>
-          <Label>Email</Label>
-          <Input type="email" name="email" />
+          <Label>Email Address</Label>
+          <Input type="email" name="email" placeholder="john@example.com" />
         </FormGroup>
         <FormGroup>
           <Label>Card Number</Label>
-          <Input type="text" name="cardNumber" />
+          <Input
+            type="text"
+            name="cardNumber"
+            placeholder="1234 5678 9012 3456"
+          />
         </FormGroup>
         <CartSummary>
-          <h3>Cart Summary</h3>
+          <h3>Order Summary</h3>
           {cart.map((item: CartProduct) => (
             <p key={item._id}>
               {item.name}: ${item.price} +{item.quantity}
@@ -66,7 +72,7 @@ export const Checkout = memo(() => {
           <p>Total: ${cartSummary.totalAmount}</p>
         </CartSummary>
         <Button type="submit" onClick={handleBuyClick}>
-          Buy
+          Complete Purchase
         </Button>
       </Form>
     </Container>

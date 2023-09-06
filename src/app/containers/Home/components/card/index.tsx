@@ -20,6 +20,7 @@ const ProductCardContainer = styled.div`
   padding: 20px;
   margin: 10px;
   width: 300px;
+  min-height: 506px;
   border-radius: 5px;
   transition: transform 0.2s ease;
   ${COLUMN_CENTER}
@@ -32,6 +33,8 @@ const ProductCardContainer = styled.div`
 const ProductImage = styled.img`
   max-width: 100%;
   height: auto;
+  width: 258px;
+  height: 258px;
   border-radius: 5px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 `;

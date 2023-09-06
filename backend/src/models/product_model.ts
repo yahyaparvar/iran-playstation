@@ -13,6 +13,12 @@ export class Product {
   @prop({ required: true })
   public image!: string;
   @prop({ required: true })
+  public priceRange!: string;
+  @prop({ required: true })
+  public benefits!: string[];
+  @prop({ required: true })
+  public howToUse!: string[];
+  @prop({ required: true })
   public description!: string;
 }
 

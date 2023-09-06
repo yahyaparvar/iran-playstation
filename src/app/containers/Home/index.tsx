@@ -16,6 +16,7 @@ import PSNCard from "./components/card";
 import { Wrapper } from "./styles";
 import history from "router/history";
 import { AppPages } from "app/types";
+import { LoadingProgressIndicator } from "../ProductDetail/styles";
 
 interface Props {}
 
@@ -36,7 +37,7 @@ export function Home(props: Props) {
         <title>Home</title>
         <meta name="description" content="Description of Home" />
       </Helmet>
-      {products &&
+      {products ? (
         products.map((product) => (
           <PSNCard
             onClick={() => {
@@ -45,11 +46,16 @@ export function Home(props: Props) {
             country={product.country}
             action="خرید"
             title={product.name}
-            description={product.description}
+            description={product.priceRange}
             image={product.image}
             key={product._id}
           />
-        ))}
+        ))
+      ) : (
+        <div
+          style={{ height: "1000px", width: "1000px", background: "red" }}
+        ></div>
+      )}
     </Wrapper>
   );
 }

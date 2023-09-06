@@ -20,22 +20,23 @@ function* getCart() {
   }
 }
 function* addToCart(action: PayloadAction<CartProduct>) {
-  console.log({ SEX: "SEX" });
   const cart: CartProduct[] | undefined = yield storage.read(
     LocalStorageKeys.CART
   );
+
+  let newCart: CartProduct[];
+
   if (!cart) {
-    storage.write(LocalStorageKeys.CART, [action.payload]);
-  } else if (cart) {
-    if (
-      cart.find(
-        (item) =>
-          item.slug === action.payload.slug &&
-          item.price === action.payload.price
-      )
-    ) {
-      const newCart = cart.map((item) => {
-        if (item.slug === action.payload.slug) {
+    newCart = [action.payload];
+  } else {
+    const existingItemIndex = cart.findIndex(
+      (item) =>
+        item._id === action.payload._id && item.price === action.payload.price
+    );
+
+    if (existingItemIndex !== -1) {
+      newCart = cart.map((item, index) => {
+        if (index === existingItemIndex) {
           return {
             ...item,
             quantity: item.quantity + 1,
@@ -43,15 +44,15 @@ function* addToCart(action: PayloadAction<CartProduct>) {
         }
         return item;
       });
-      storage.write(LocalStorageKeys.CART, newCart);
     } else {
-      const newCart = [...cart, action.payload];
-      storage.write(LocalStorageKeys.CART, newCart);
+      newCart = [...cart, action.payload];
     }
-
-    yield put(globalActions.getCart());
   }
+
+  storage.write(LocalStorageKeys.CART, newCart);
+  yield put(globalActions.getCart());
 }
+
 function* removeFromCart(action: PayloadAction<Product>) {
   const cart: CartProduct[] | undefined = yield storage.read(
     LocalStorageKeys.CART

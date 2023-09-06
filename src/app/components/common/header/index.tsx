@@ -8,15 +8,26 @@ import {
   Fade,
 } from "@mui/material";
 
-import { AppPages } from "app/types"; 
+import { AppPages } from "app/types";
 import { globalSelectors } from "store/selectors";
 import history from "router/history";
 import { playstationLogoUrl } from "app/constants";
 import { useGlobalSlice } from "store/slice";
 import makeBlockie from "ethereum-blockies-base64";
-import { HeaderWrapper, LeftActions, ProfileImg, CartContainer, CartIcon, ItemCount, PopoverContent, RightActions, SearchInput, SearchIconButton, Logo } from "./styles";
-
-
+import {
+  HeaderWrapper,
+  LeftActions,
+  ProfileImg,
+  CartContainer,
+  CartIcon,
+  ItemCount,
+  PopoverContent,
+  RightActions,
+  PageText,
+  SearchInput,
+  SearchIconButton,
+  Logo,
+} from "./styles";
 
 export const Header = () => {
   useGlobalSlice();
@@ -43,7 +54,7 @@ export const Header = () => {
   const handleSearch = () => {};
 
   return (
-    <HeaderWrapper  >
+    <HeaderWrapper>
       <LeftActions>
         <IconButton
           disableRipple={true}
@@ -79,6 +90,24 @@ export const Header = () => {
             <Typography>Profile Content</Typography>
           </PopoverContent>
         </Popover>
+        <PageText onClick={() => history.push(AppPages.RootPage)}>
+          درباره ما
+        </PageText>
+        <PageText onClick={() => history.push(AppPages.RootPage)}>
+          راهنمای خرید
+        </PageText>
+        <PageText onClick={() => history.push(AppPages.RootPage)}>
+          تخفیف ها و پیشنهادات
+        </PageText>
+        <PageText onClick={() => history.push(AppPages.RootPage)}>
+          اخبار و حواشی
+        </PageText>
+        <PageText onClick={() => history.push(AppPages.RootPage)}>
+          دسته بندی
+        </PageText>
+        <PageText onClick={() => history.push(AppPages.RootPage)}>
+          صفحه اصلی
+        </PageText>
       </LeftActions>
       <RightActions>
         <SearchInput
