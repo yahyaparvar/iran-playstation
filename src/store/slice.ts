@@ -38,7 +38,6 @@ const globalSlice = createSlice({
       state.cart = [...action.payload];
     },
     addToCart(state, action: PayloadAction<CartProduct>) {
-      console.log("SEX");
       if (state.cart) {
         state.cart.push(action.payload);
       }

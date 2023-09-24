@@ -6,7 +6,6 @@ import { signupActions } from "./slice";
 import { axiosNoAuth } from "services/API";
 import { AxiosResponse } from "axios";
 import { LocalStorageKeys, storage } from "store/storage";
-import history from "router/history";
 
 export function* signUp(action: ReturnType<typeof signupActions.signUp>) {
   const data = action.payload;

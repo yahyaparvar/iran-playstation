@@ -12,7 +12,7 @@ interface Props {
 const store = configureAppStore({});
 const ConnectedApp = ({ Component }: Props) => {
   const [isFontLoaded, setIsFontLoaded] = useState(false);
-  const openSansObserver = new FontFaceObserver("ir-sans", {});
+  const openSansObserver = new FontFaceObserver("Noto Sans Arabic", {});
   openSansObserver.load().then(() => {
     setIsFontLoaded(true);
     document.body.classList.add("fontLoaded");

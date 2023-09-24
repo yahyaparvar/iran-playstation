@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   ${COLUMN_CENTER}
   min-height: 100vh;
   width: 100%;
+  background-color: #00439C !important;
   background: url(${backgroundImageUrl}) center/cover no-repeat;
 `;
 
@@ -37,6 +38,7 @@ const FormContainer = styled.div`
   padding: 20px;
   border-radius: 8px;
   width: 400px;
+
   ${COLUMN_CENTER}
 `;
 

@@ -2,6 +2,7 @@
 import { COLORS } from "app/constants";
 import React, { ButtonHTMLAttributes } from "react";
 import styled from "styled-components";
+import { ROW_CENTER } from "styles/globalStyles";
 
 const PrimaryButtonWrapper = styled.button<
   ButtonHTMLAttributes<HTMLButtonElement>
@@ -9,7 +10,8 @@ const PrimaryButtonWrapper = styled.button<
   background-color: ${COLORS.primary};
   color: white;
   border: none;
-  padding: 11px 16px;
+  height: 50px;
+  ${ROW_CENTER}
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;

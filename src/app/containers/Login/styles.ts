@@ -2,9 +2,11 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
+  padding-top: 80px;
   flex-direction: column;
   width: 300px;
   margin: 0 auto;
+  background-color: #0070d1;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;

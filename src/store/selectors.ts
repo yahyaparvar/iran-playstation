@@ -21,7 +21,8 @@ export const globalSelectors = {
       }, 0);
       return {
         totalItems,
-        totalAmount,
+        totalAmount: totalAmount + totalItems,
+        toman: (totalAmount + totalItems) * 50000,
       };
     } else {
       return {

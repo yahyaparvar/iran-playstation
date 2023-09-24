@@ -4,6 +4,7 @@ import { CustomInput } from "../inputs/simple";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
+import PrimaryButton from "../buttons/primary";
 export const Wrapper = styled.div`
   width: 100%;
   padding: 20px 40px;
@@ -88,4 +89,9 @@ export const ItemCount = styled.div`
   width: 20px;
   height: 20px;
   font-size: 12px;
+`;
+export const SignInButton = styled(PrimaryButton)`
+  height: 36px !important;
+  width: 130px;
+  font-weight: bold;
 `;

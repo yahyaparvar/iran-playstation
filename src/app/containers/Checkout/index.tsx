@@ -9,9 +9,21 @@ import {
   Form,
   FormGroup,
   Input,
+  CartItemName,
+  CartItemPrice,
+  CartItemQuantity,
+  CartItemTotalPrice,
+  CartItemTotalPriceTitle,
   Label,
   Button,
   CartSummary,
+  CartSummaryTitle,
+  CartSummaryPrice,
+  CartItemContainer,
+  SummaryPriceDivider,
+  FormContainer,
+  FormRow,
+  FormSeperator,
 } from "./styles";
 import { LocalStorageKeys, storage } from "store/storage";
 import history from "router/history";
@@ -34,47 +46,54 @@ export const Checkout = memo(() => {
 
   return (
     <Container>
+      <FormContainer>
+        <Form onSubmit={handleSubmit}>
+          <FormRow>
+            <Input type="text" name="firstName" placeholder="نام" />
+            <FormSeperator />
+            <Input type="text" name="lastName" placeholder="نام خانوادگی" />
+          </FormRow>
+          <FormGroup>
+            <Input type="email" name="email" placeholder="ایمیل" />
+          </FormGroup>
+          <FormGroup>
+            <Input type="text" name="phoneNumber" placeholder="شماره تلفن" />
+          </FormGroup>
+          <Button type="submit" onClick={handleBuyClick}>
+            رفتن به درگاه
+          </Button>
+        </Form>
+      </FormContainer>
       <CartContainer>
-        <h2>Your Cart</h2>
-        {cart.map((item: CartProduct) => (
-          <CartItem key={item._id}>
-            <h3>
-              {item.name} X{item.quantity}
-            </h3>
-            <p>Price: ${item.price}</p>
-          </CartItem>
-        ))}
-      </CartContainer>
-      <Form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label>Full Name</Label>
-          <Input type="text" name="name" placeholder="John Doe" />
-        </FormGroup>
-        <FormGroup>
-          <Label>Email Address</Label>
-          <Input type="email" name="email" placeholder="john@example.com" />
-        </FormGroup>
-        <FormGroup>
-          <Label>Card Number</Label>
-          <Input
-            type="text"
-            name="cardNumber"
-            placeholder="1234 5678 9012 3456"
-          />
-        </FormGroup>
         <CartSummary>
-          <h3>Order Summary</h3>
-          {cart.map((item: CartProduct) => (
-            <p key={item._id}>
-              {item.name}: ${item.price} +{item.quantity}
-            </p>
+          <CartSummaryTitle>اطلاعات خرید:</CartSummaryTitle>
+          {cart.map((product: CartProduct) => (
+            <CartItemContainer key={product._id}>
+              <CartItemName>
+                {product.quantity}x عدد {product.name} {product.price} دلاری
+              </CartItemName>
+              <CartItemTotalPrice>
+                ${product.price * product.quantity}
+              </CartItemTotalPrice>
+            </CartItemContainer>
           ))}
-          <p>Total: ${cartSummary.totalAmount}</p>
+          <CartItemContainer>
+            <CartItemName>مالیات</CartItemName>
+            <CartItemTotalPrice>${cartSummary.totalItems}</CartItemTotalPrice>
+          </CartItemContainer>
+          <SummaryPriceDivider></SummaryPriceDivider>
+          <CartItemContainer>
+            <CartItemName>قیمت کل:</CartItemName>
+            <CartItemTotalPrice>${cartSummary.totalAmount}</CartItemTotalPrice>
+          </CartItemContainer>
+          <CartItemContainer>
+            <CartItemName>قیمت به تومان:</CartItemName>
+            <CartItemTotalPrice>
+              {cartSummary.toman?.toLocaleString()} تومان
+            </CartItemTotalPrice>
+          </CartItemContainer>
         </CartSummary>
-        <Button type="submit" onClick={handleBuyClick}>
-          Complete Purchase
-        </Button>
-      </Form>
+      </CartContainer>
     </Container>
   );
 });

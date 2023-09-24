@@ -27,13 +27,16 @@ import {
   SearchInput,
   SearchIconButton,
   Logo,
+  SignInButton,
 } from "./styles";
+import { LocalStorageKeys, storage } from "store/storage";
+import PrimaryButton from "../buttons/primary";
 
 export const Header = () => {
   useGlobalSlice();
   const cartSummary = useSelector(globalSelectors.cartSummary);
   const [profileAnchorEl, setProfileAnchorEl] = useState(null);
-
+  const isLoggedIn = storage.read(LocalStorageKeys.USER);
   const handleProfileClick = (event: any) => {
     setProfileAnchorEl(event.currentTarget);
   };
@@ -56,13 +59,39 @@ export const Header = () => {
   return (
     <HeaderWrapper>
       <LeftActions>
-        <IconButton
-          disableRipple={true}
-          aria-describedby={profileId}
-          onClick={handleProfileClick}
-        >
-          <ProfileImg src={makeBlockie(playstationLogoUrl)} />
-        </IconButton>
+        {!isLoggedIn ? (
+          <>
+            <IconButton
+              disableRipple={true}
+              aria-describedby={profileId}
+              onClick={handleProfileClick}
+            >
+              <ProfileImg src={makeBlockie(playstationLogoUrl)} />
+            </IconButton>{" "}
+            <Popover
+              id={profileId}
+              open={openProfile}
+              anchorEl={profileAnchorEl}
+              onClose={handleProfileClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+            >
+              <PopoverContent>
+                <Typography>Profile Content</Typography>
+              </PopoverContent>
+            </Popover>
+          </>
+        ) : (
+          <SignInButton onClick={() => history.push(AppPages.Login)}>
+            ورود
+          </SignInButton>
+        )}
 
         {/* Cart Container */}
         <CartContainer onClick={handleCartClick}>
@@ -72,24 +101,6 @@ export const Header = () => {
           )}
         </CartContainer>
 
-        <Popover
-          id={profileId}
-          open={openProfile}
-          anchorEl={profileAnchorEl}
-          onClose={handleProfileClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-        >
-          <PopoverContent>
-            <Typography>Profile Content</Typography>
-          </PopoverContent>
-        </Popover>
         <PageText onClick={() => history.push(AppPages.RootPage)}>
           درباره ما
         </PageText>

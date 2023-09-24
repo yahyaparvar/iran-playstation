@@ -12,6 +12,7 @@ import {
 export const Wrapper = styled.div`
   ${COLUMN_JUSTIFY_START__ALIGN_CENTER}
   min-height: 100vh;
+  margin-top: 170px;
 `;
 
 export const ProductDetailContainer = styled.div`
@@ -123,7 +124,7 @@ export const Item = styled.li`
   margin-bottom: 5px; // Reduced vertical margin
   color: #666;
 `;
-export const AnchorLink = styled.a` 
+export const AnchorLink = styled.a`
   color: #ff2040;
   text-decoration: none;
   font-weight: 600;
@@ -131,5 +132,5 @@ export const AnchorLink = styled.a`
   cursor: pointer;
   &:hover {
     text-decoration: underline;
-  } 
+  }
 `;

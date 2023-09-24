@@ -9,6 +9,8 @@ import { signupActions, signupReducer, sliceKey } from "./slice";
 import { signupSaga } from "./saga";
 import { CustomInput } from "app/components/common/inputs/simple";
 import { COLUMN_CENTER, ROW_CENTER } from "styles/globalStyles";
+import history from "router/history";
+import { AppPages } from "app/types";
 
 const gradientColors = {
   start: "#2f5bd3",
@@ -31,6 +33,8 @@ const Wrapper = styled.div`
   ${COLUMN_CENTER}
   min-height: 100vh;
   width: 100%;
+  padding-top: 80px;
+  background-color: #00439c !important;
   background: url(${backgroundImageUrl}) center/cover no-repeat;
 `;
 
@@ -88,7 +92,21 @@ const Form = styled.form`
   width: 100%;
 `;
 
+const RegisterLink = styled.div`
+  display: block;
+  margin-top: 10px;
+  text-decoration: none;
+  color: #fff;
+`;
+
+const HighlightedText = styled.a`
+  cursor: pointer;
+  color: #e14a9d;
+`;
 export function Signup() {
+  const handleRegisterClick = () => {
+    history.push(AppPages.Login);
+  };
   useInjectReducer({ key: sliceKey, reducer: signupReducer });
   useInjectSaga({ key: sliceKey, saga: signupSaga });
   const dispatch = useDispatch();
@@ -180,6 +198,12 @@ export function Signup() {
           <SubmitButton type="submit">ثبت نام</SubmitButton>
         </Form>
       </FormContainer>
+      <RegisterLink>
+        قبلا اکانت ساخته اید؟{" "}
+        <HighlightedText onClick={handleRegisterClick}>
+          وارد شوید{" "}
+        </HighlightedText>
+      </RegisterLink>
     </Wrapper>
   );
 }

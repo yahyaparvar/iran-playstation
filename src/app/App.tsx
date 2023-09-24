@@ -1,6 +1,6 @@
 import { History } from "history";
 import { FC, ReactElement, useEffect, useLayoutEffect, useState } from "react";
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Router, Routes, useLocation } from "react-router-dom";
 import history from "../router/history";
 import { AppPages } from "./types";
 import { NotFoundPage } from "./containers/NotFound";
@@ -14,6 +14,7 @@ import { Checkout } from "./containers/Checkout/Loadable";
 import { Signup } from "./containers/Signup/Loadable";
 import { Login } from "./containers/Login/Loadable";
 import { Footer } from "./components/common/footer";
+import { LocalStorageKeys, storage } from "store/storage";
 interface CustomRouterProps {
   history: History;
   children?: ReactElement;
@@ -38,14 +39,35 @@ const CustomRouter: FC<CustomRouterProps> = ({ history, ...props }) => {
 };
 function App() {
   const dispatch = useDispatch();
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  useEffect(() => {
+    history.listen(() => {
+      if (
+        history.location.pathname === AppPages.Login ||
+        history.location.pathname === AppPages.Signup
+      ) {
+        setIsLoggedIn(false);
+      } else {
+        setIsLoggedIn(true);
+      }
+    });
+  }, []);
+
   useEffect(() => {
     dispatch(globalActions.getCart());
-    console.log("Header");
+
+    console.log(storage.read(LocalStorageKeys.AUTH));
   }, []);
   return (
     <AppWrapper>
-      <Header />
-      <Placeholder />
+      {isLoggedIn ? (
+        <>
+          <Header />
+          <Placeholder />
+        </>
+      ) : (
+        <></>
+      )}
       <CustomRouter history={history}>
         <Routes>
           <Route path={AppPages.RootPage} element={<Home />} />
@@ -56,7 +78,7 @@ function App() {
           <Route path={AppPages.NotFoundPage} element={<NotFoundPage />} />
         </Routes>
       </CustomRouter>
-      <Footer />
+      {isLoggedIn ? <Footer /> : <></>}
     </AppWrapper>
   );
 }
@@ -65,6 +87,6 @@ const AppWrapper = styled.div`
   min-height: 100vh;
 `;
 const Placeholder = styled.div`
-  margin-top: 170px;
+  margin-top: 80px;
 `;
 export default App;
