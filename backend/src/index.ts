@@ -1,12 +1,12 @@
-import express, { Request, Response } from "express";
-import { sampleProducts } from "./data";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
+import { orderRouter } from "./routers/order_router";
 import { productRouter } from "./routers/product_router";
 import { seedRouter } from "./routers/seed_roouter";
 import { userRouter } from "./routers/user_router";
+import { sampleProducts } from "./data";
+import express, { Request, Response } from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 import cors from "cors";
-import { orderRouter } from "./routers/order_router";
 dotenv.config();
 
 const MONGODB_URL =
